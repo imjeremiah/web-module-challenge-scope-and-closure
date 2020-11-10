@@ -43,6 +43,9 @@ Find the file `index.js` and complete the tasks.
 Edit the `ReadMe` file with your answers.
 
 1. In your own words, define closure (1-2 sentences).
+
+A closure is a function that has access to the parent function's scope, even after the parent stops running. 
+
 2. Study the following code, then answer the questions below.
 
 ```js
@@ -64,8 +67,16 @@ dansRoll();
 ```
 
 a. Where is closure used in this code? How can you tell?
+
+Closure is used in the inner function(), it uses a variable declared in the parent funciton
+
 b. Compare and contrast calling `dansRoll` the first and second time. What is always the same? What could change?
+
+The name variable never chanfges. The newRoll variable changes. 
+
 c. What is the lexical scope of `newRoll`? 
+
+It is local to the nested function inside the personalDice() function. 
 
 ### Task 2c - Exit Ticket
 
@@ -85,19 +96,29 @@ See if you can complete one or more of the following challenges:
 (function(){
   var a = b = 3;
 })();
-console.log("a defined? " + (typeof a !== 'undefined'));
-console.log("b defined? " + (typeof b !== 'undefined'));
+console.log("a defined? " + (typeof a !== 'undefined')); // TRUE
+console.log("b defined? " + (typeof b !== 'undefined')); // FALSE
 ```
 
 2. Write a function that would allow you to do this using a closure. (This is another interview question we've seen before - when you're ready for answers, view an explanation [here](https://www.coderbyte.com/algorithm/3-common-javascript-closure-questions)).
 
 ```js
+function createBase(baseNumber){
+  return function(N){
+    return baseNumber + N;
+  }
+}
+
 var addSix = createBase(6);
 addSix(10); // returns 16
 addSix(21); // returns 27
 ```
 
 3. Research the differences between functional programming and object oriented programming. Then, describe the pros and cons of functional programming vs object-oriented programming. This is a common interview question and great practice!
+
+Functional programming provides advantages like nested functions, easily reusable code, siing immutable data and parallel programming. However, functional programming is a bit more complex, using recursion instead of loops to iterate data, and it's harder to model real world scenarios. 
+
+OOP has the advantage of encapsulation, and easily modeling real world scenarios. However, OOP is not as easily reusable, and it does not support parallel programming. 
 
 ## Resources
 

@@ -28,11 +28,17 @@ console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
   Study the code for counter1 and counter2, then answer the questions below.
   
   1. What is the difference between counter1 and counter2?
+
+  counter1 is a variable assigned to a function that contains a nested function, it also contains a private variable of count. counter2 contains a function that reaches out to a global valirable of count. 
   
   2. Which of the two uses a closure? How can you tell?
   
+  counter1, it contains a nested function that has access to the parent scope, even after that parent counterMaker() function closes.
+  
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
+
+     counter1 would be preferable when yo want to protect the count variable and make it private. counter2 would be preferable if you want to ever change the global variable without calling the function. 
 */
 
 // counter1 code
@@ -61,11 +67,11 @@ Use the inning function below to do the following:
   For example: invoking inning() should return a numerical score value of 0, 1, or 2
 */
 
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inning(){
+  return Math.floor(Math.random() * 3);
 }
+console.log(inning());
+
 
 /* Task 3: finalScore()
 Use the finalScore function below to do the following:
@@ -80,20 +86,36 @@ For example: invoking finalScore(inning, 9) might return this object:
 }
 */ 
 
-function finalScore(/*code Here*/){
+function finalScore(inningCB, innings){
+  let homeScore = 0
+  let awayScore = 0
 
-  /*Code Here*/
-
+  for(let i = 0; i<innings; i++){
+    homeScore = homeScore + inningCB();
+    awayScore = awayScore + inningCB();
+  }
+  return {
+    Home: homeScore,
+    Away: awayScore
+  }
 }
+console.log(finalScore(inning, 9));
+
 
 /* Task 4: 
 // create a function called getInningScore 
 // the function should take the inning function as an argument 
 // it should return an object with with a score for home and a score for away that that populates from invoking the inning callback. */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(inningCB) {
+  return {
+    Home: inning(),
+    Away: inning()
+  }
 }
+console.log(getInningScore(inning()));
+
+
 /* Task 5: scoreboard()
 Use the scoreboard function below to do the following:
   1. Receive a callback function, that you create, called `getInningScore`
@@ -138,11 +160,40 @@ Use the scoreboard function below to do the following:
   */
 
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
-}
+function scoreboard(getInningScoreCB, inningCB, innings){
+  const recap = [];
+  let homeScore = 0;
+  let awayScore = 0;
+  for(let i = 0; i < innings; i++){
+    const currentScore = getInningScoreCB(inningCB);
+    homeScore += currentScore.Home;
+    awayScore += currentScore.Away;
+    recap.push(`Inning ${i +1}: Away ${currentScore.Away}: Home ${currentScore.Home}`)  
+  }if(homeScore === awayScore){
+      recap.push(`This game will require extra innings: ${awayScore} - ${homeScore}`)
+    }else recap.push(`Final Score: Away ${awayScore} - Home ${homeScore}`)
+    return recap;
+  }
+
+  console.log(scoreboard(getInningScore, inning, 9));
 
 
+  function personalDice(name){
+    return function(){
+        // generate random number between 1 and 6
+      const newRoll = Math.floor(Math.random() * 6);
+      console.log(`${name} rolled a ${newRoll}`)
+    }
+  }
+  
+  const dansRoll = personalDice("Dan");
+  
+  //const zoesRoll = personalDice("Zoe");
+  
+  
+  console.log(dansRoll());
+  console.log(dansRoll());
+  
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
