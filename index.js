@@ -29,14 +29,16 @@ console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
   
   1. What is the difference between counter1 and counter2?
 
-  counter1 
+  counter1 is a variable assigned to a function that contains a nested function, it also contains a private variable of count. counter2 contains a function that reaches out to a global valirable of count. 
   
   2. Which of the two uses a closure? How can you tell?
   
-  counter1, it contains nested functions. 
+  counter1, it contains a nested function that has access to the parent scope, even after that parent counterMaker() function closes.
   
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
+
+     counter1 would be preferable when yo want to protect the count variable and make it private. counter2 would be preferable if you want to ever change the global variable without calling the function. 
 */
 
 // counter1 code
@@ -70,6 +72,7 @@ function inning(){
 }
 console.log(inning());
 
+
 /* Task 3: finalScore()
 Use the finalScore function below to do the following:
   1. Receive the callback function `inning` that was created in Task 2 
@@ -98,35 +101,6 @@ function finalScore(inningCB, innings){
 }
 console.log(finalScore(inning, 9));
 
-// function finalScore(inningCB, innings){
-//   let home = 0;
-//   let away = 0;
-
-//   for(let i in innings){
-//     const currentScore = inning(innings)
-//     home = home + currentScore
-//     away = away + currentScore
-//   }
-//   return {
-//     Home: home,
-//     Away: away
-//   }
-// }
-// console.log(finalScore(inning, 9));
-
-// function finalScore(inningCB, innings){
-//   let score = {};
-
-//   for(let i in innings){
-//     score.Home += inning();
-//     score.Away += inning();
-//   }
-//   console.log(`After ${innings} innings, the final score is ${score.Home}, ${score.Away}`)
-//   return {
-//     score.Home,
-//     score
-// }
-// console.log(finalScore(inning, 9));
 
 /* Task 4: 
 // create a function called getInningScore 
@@ -140,6 +114,7 @@ function getInningScore(inningCB) {
   }
 }
 console.log(getInningScore(inning()));
+
 
 /* Task 5: scoreboard()
 Use the scoreboard function below to do the following:
@@ -200,10 +175,25 @@ function scoreboard(getInningScoreCB, inningCB, innings){
     return recap;
   }
 
-  console.log("task 5", scoreboard(getInningScore, inning, 9));
+  console.log(scoreboard(getInningScore, inning, 9));
+
+
+  function personalDice(name){
+    return function(){
+        // generate random number between 1 and 6
+      const newRoll = Math.floor(Math.random() * 6);
+      console.log(`${name} rolled a ${newRoll}`)
+    }
+  }
   
-
-
+  const dansRoll = personalDice("Dan");
+  
+  //const zoesRoll = personalDice("Zoe");
+  
+  
+  console.log(dansRoll());
+  console.log(dansRoll());
+  
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
